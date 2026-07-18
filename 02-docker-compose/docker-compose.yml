@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  flask:
+    build: .
+    restart: unless-stopped
+
+    ports:
+      - "5001:5000"
+
+    environment:
+      DB_HOST: postgres
+      DB_NAME: taskdb
+      DB_USER: admin
+      DB_PASSWORD: admin123
+
+    depends_on:
+      - postgres
+
+volumes:
+  postgres-data:

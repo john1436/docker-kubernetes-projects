@@ -1,0 +1,224 @@
+# Docker Compose Flask + PostgreSQL Task API
+
+A simple REST API built with **Flask** and **PostgreSQL**, containerized using **Docker** and orchestrated with **Docker Compose**.
+
+This project demonstrates containerization, service communication, persistent storage using Docker volumes, and environment variable configuration.
+
+---
+
+## Features
+
+- Flask REST API
+- PostgreSQL database
+- Dockerized application
+- Docker Compose orchestration
+- Persistent storage using Docker Volumes
+- Environment variable configuration
+- Health endpoint for application monitoring
+
+---
+
+## Project Structure
+
+```
+.
+├── app.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Architecture
+
+```
+                +----------------+
+                |    Client      |
+                +--------+-------+
+                         |
+                    HTTP :5001
+                         |
+                         ▼
+                +----------------+
+                | Flask API       |
+                | Container       |
+                +--------+-------+
+                         |
+                    PostgreSQL
+                         |
+                         ▼
+                +----------------+
+                | PostgreSQL      |
+                | Container       |
+                +--------+-------+
+                         |
+                         ▼
+                Docker Named Volume
+                   postgres-data
+```
+
+---
+
+## Technologies Used
+
+- Python 3
+- Flask
+- PostgreSQL 17
+- psycopg2
+- Docker
+- Docker Compose
+
+---
+
+## API Endpoints
+
+### Health Check
+
+```
+GET /health
+```
+
+Example:
+
+```bash
+curl http://localhost:5001/health
+```
+
+---
+
+### Get All Tasks
+
+```
+GET /tasks
+```
+
+Example:
+
+```bash
+curl http://localhost:5001/tasks
+```
+
+---
+
+### Create Task
+
+```
+POST /tasks
+```
+
+Example:
+
+```bash
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"title":"Learn Docker"}' \
+http://localhost:5001/tasks
+```
+
+---
+
+## Running the Project
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd 02-docker-compose
+```
+
+### Start Application
+
+```bash
+docker compose up --build
+```
+
+The application will be available at:
+
+```
+http://localhost:5001
+```
+
+---
+
+## Verify the Application
+
+Health Check
+
+```bash
+curl http://localhost:5001/health
+```
+
+Get Tasks
+
+```bash
+curl http://localhost:5001/tasks
+```
+
+Create Task
+
+```bash
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"title":"Learn Docker Compose"}' \
+http://localhost:5001/tasks
+```
+
+---
+
+## Persistent Storage
+
+PostgreSQL data is stored using a Docker named volume.
+
+Stopping containers:
+
+```bash
+docker compose down
+```
+
+does **not** delete the database.
+
+Removing the volume:
+
+```bash
+docker compose down -v
+```
+
+will permanently delete all stored data.
+
+---
+
+## Learning Outcomes
+
+This project demonstrates practical experience with:
+
+- Docker Images
+- Docker Containers
+- Docker Networks
+- Docker Volumes
+- Docker Compose
+- Flask REST APIs
+- PostgreSQL
+- Environment Variables
+- Container-to-Container Communication
+- Persistent Data Storage
+
+---
+
+## Future Improvements
+
+- Environment variables using `.env`
+- Database initialization scripts (`init.sql`)
+- Docker health checks
+- Nginx reverse proxy
+- Multi-stage Docker builds
+- CI/CD pipeline
+- Kubernetes deployment
+- Database migrations using Alembic
+
+---
+
+## Author
+
+John Gilbert
